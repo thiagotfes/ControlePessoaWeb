@@ -1,0 +1,52 @@
+package br.com.cpweb.bean;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
+import org.omnifaces.util.Messages;
+
+import br.com.cpweb.DAO.PaisDAO;
+import br.com.cpweb.domain.Pais;
+
+@ManagedBean
+@ViewScoped
+public class PaisBean implements Serializable {
+	private Pais pais;
+	private List<Pais> paises;
+
+	public Pais getPais() {
+		return pais;
+	}
+
+	public void setPais(Pais pais) {
+		this.pais = pais;
+	}
+	
+	public void novo(){
+		pais = new Pais();
+	}
+
+	public List<Pais> getPaises() {
+		return paises;
+	}
+
+	public void setPaises(List<Pais> paises) {
+		this.paises = paises;
+	}
+
+	public void salvar(){
+		try {
+				PaisDAO paisDAO = new PaisDAO();
+				paisDAO.salvar(pais);
+				novo();
+				Messages.addGlobalInfo("País salvo com sucesso");
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar salvar o país");
+			erro.printStackTrace();
+		}
+	}
+
+}

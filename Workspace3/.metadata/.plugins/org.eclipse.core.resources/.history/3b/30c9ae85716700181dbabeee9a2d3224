@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Estados</title>
+</h:head>
+<h:body>
+
+	<p:growl id="mensagem" />
+	
+	<!-- FORM DA LISTAGEM -->
+	<h:form id="formListagem">
+	
+		<!-- PAINEL DA LISTAGEM -->
+		<p:panel header="Estados - Listagem">
+		
+			<!-- TABELA -->
+			<p:dataTable emptyMessage="Nenhum registro encontrado."
+				paginator="true" value="#{estadoBean.estados}" var="estado"
+				rows="10" id="tabela">
+
+				<!-- BOTÃO NOVO DA LISTAGEM -->
+				<f:facet name="header">
+					<p:commandButton value="Novo" actionListener="#{estadoBean.novo}"
+						oncomplete="PF('dialogo').show();"
+						update=":mensagem :formCadastro:painel" />
+				</f:facet>
+
+				<!-- CABEÇALHOS DA LISTAGEM -->
+				<p:column headerText="Código" sortBy="#{estado.cduf}"
+					filterBy="#{estado.cduf}">
+					<h:outputText value="#{estado.cduf}" />
+				</p:column>
+
+				<p:column headerText="Nome" sortBy="#{estado.nome}"
+					filterBy="#{estado.nome}">
+					<h:outputText value="#{estado.nome}" />
+				</p:column>
+
+				<p:column headerText="País" sortBy="#{estado.pais.nome}"
+					filterBy="#{estado.pais.nome}">
+					<h:outputText value="#{estado.pais.cdpais}" />
+					<h:outputText value=" - " />
+					<h:outputText value="#{estado.pais.nome}" />
+				</p:column>
+
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+	<!-- TELA DE CADASTRO -->
+	<p:dialog header="Estados - Cadastro" widgetVar="dialogo"
+		closable="false" draggable="false" resizable="false" modal="true">
+		
+		<!-- FORM DA TELA DE CADASTRO -->
+		<h:form id="formCadastro">
+		
+			<!-- PAINEL DA TELA DE CADASTRO -->
+			<p:panelGrid columns="2" id="painel">
+				<p:outputLabel value="Código: " />
+				<p:inputText size="5" maxlength="6"
+					value="#{estadoBean.estado.cduf}" />
+
+				<p:outputLabel value="Nome: " />
+				<p:inputText size="60" maxlength="50"
+					value="#{estadoBean.estado.nome}" />
+
+				<!-- POPULAR COMBOBOX COM INFO DO BANCO -->
+				<p:outputLabel value="País: " />
+				<p:selectOneMenu filter="true" value="#{estadoBean.estado.pais}">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um país" />
+					<f:selectItems value="#{estadoBean.paises}" var="pais"
+						itemValue="#{pais}" itemLabel="#{pais.nome}" />
+				</p:selectOneMenu>
+
+			<!-- BOTÕES DA TELA CADASTRO -->
+			</p:panelGrid>
+			<p:panelGrid columns="2">
+				<p:commandButton value="Salvar"
+					actionListener="#{estadoBean.salvar}"
+					update=":mensagem :formCadastro:painel :formListagem:tabela"
+					oncomplete="PF('dialogo').hide();" />
+				<p:commandButton value="Cancelar" oncomplete="PF('dialogo').hide();" />
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+
+</h:body>
+</html>

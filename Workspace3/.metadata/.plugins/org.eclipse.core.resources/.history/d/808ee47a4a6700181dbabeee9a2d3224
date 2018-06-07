@@ -1,0 +1,39 @@
+package br.com.cpweb.bean;
+
+import java.io.Serializable;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
+import org.omnifaces.util.Messages;
+
+import br.com.cpweb.DAO.PaisDAO;
+import br.com.cpweb.domain.Pais;
+
+@ManagedBean
+@ViewScoped
+public class PaisBean implements Serializable {
+	private Pais pais;
+
+	public Pais getPais() {
+		return pais;
+	}
+
+	public void setPais(Pais pais) {
+		this.pais = pais;
+	}
+	
+	public void novo(){
+		pais = new Pais();
+	}
+	
+	public void salvar(){
+		try {
+				PaisDAO paisDAO = new PaisDAO();
+				paisDAO.salvar(pais);
+				novo();
+				Messages
+		}
+	}
+
+}

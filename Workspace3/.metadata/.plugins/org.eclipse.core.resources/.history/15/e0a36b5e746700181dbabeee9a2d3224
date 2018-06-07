@@ -1,0 +1,88 @@
+package br.com.cpweb.bean;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
+import org.omnifaces.util.Messages;
+
+import br.com.cpweb.DAO.EstadoDAO;
+import br.com.cpweb.DAO.PaisDAO;
+import br.com.cpweb.domain.Estado;
+import br.com.cpweb.domain.Pais;
+
+@SuppressWarnings("serial")
+@ManagedBean
+@ViewScoped
+public class EstadoBean implements Serializable {
+	private List<Pais> paises;
+	private Estado estado;
+	private List<Estado> estados;
+
+	public List<Pais> getPaises() {
+		return paises;
+	}
+
+	public void setPaises(List<Pais> paises) {
+		this.paises = paises;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public List<Estado> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<Estado> estados) {
+		this.estados = estados;
+	}
+
+	@PostConstruct
+	public void listar() {
+		try {
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estados = estadoDAO.listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar listar os países");
+			erro.printStackTrace();
+		}
+	}
+
+	public void novo() {
+		try {
+			estado = new Estado();
+
+			PaisDAO paisDAO = new PaisDAO();
+			paises = paisDAO.listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar gerar um novo país");
+			erro.printStackTrace();
+		}
+	}
+
+	public void salvar() {
+		try {
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estadoDAO.merge(estado);
+			novo();
+			PaisDAO paisDAO = new PaisDAO();
+			paises = paisDAO.listar();
+			estados = estadoDAO.listar();
+			
+			Messages.addGlobalError("Estado cadastrado com sucesso");
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar salvar um novo estado");
+			erro.printStackTrace();
+		}
+	}
+
+}

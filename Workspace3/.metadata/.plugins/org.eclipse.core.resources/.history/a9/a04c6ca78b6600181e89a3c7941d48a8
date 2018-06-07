@@ -1,0 +1,5 @@
+package br.com.cpweb.util;
+
+public class PersistenceTest {
+
+}

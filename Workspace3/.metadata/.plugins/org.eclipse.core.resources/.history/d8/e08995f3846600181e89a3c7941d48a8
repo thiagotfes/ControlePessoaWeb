@@ -1,0 +1,27 @@
+package br.com.cpweb.domain;
+
+import javax.persistence.Entity;
+
+@Entity(name = "tbl_pais")
+public class Pais extends GenericDomain {
+
+	private String cdpais;
+	private String nome;
+
+	public String getCdpais() {
+		return cdpais;
+	}
+
+	public void setCdpais(String cdpais) {
+		this.cdpais = cdpais;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+}

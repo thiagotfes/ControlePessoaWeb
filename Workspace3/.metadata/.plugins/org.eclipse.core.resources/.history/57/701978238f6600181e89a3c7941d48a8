@@ -1,0 +1,13 @@
+package br.com.cpweb.domain;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@SuppressWarnings("serial")
+@Entity
+public class UF extends GenericDomain{
+	@Column(length=6, nullable=false)
+	private String codigo;
+	@Column(length=2, nullable=false)
+	private String nome;
+}

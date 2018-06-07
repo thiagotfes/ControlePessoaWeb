@@ -1,0 +1,40 @@
+package br.com.cpweb.DAO;
+
+import java.util.List;
+
+import org.junit.Ignore;
+import org.junit.Test;
+
+import br.com.cpweb.domain.Cidade;
+import br.com.cpweb.domain.Estado;
+import br.com.cpweb.domain.Pais;
+
+public class CidadeDAOTest {
+	
+	@Test
+	@Ignore
+	public void salvar(){
+		PaisDAO paisDAO = new PaisDAO();
+		Pais pais = paisDAO.buscar(1L);
+		
+		EstadoDAO estadoDAO = new EstadoDAO();
+		Estado estado = estadoDAO.buscar(1L);
+		
+		Cidade cidade = new Cidade();
+		cidade.setCdcidade("000001");
+		cidade.setNome("Teresopolis");
+		cidade.setUf(estado);
+		cidade.setPais(pais);
+		
+		CidadeDAO cidadeDAO = new CidadeDAO();
+		cidadeDAO.salvar(cidade);
+	}
+	
+	@Test
+	@Ignore
+	public void listar(){
+		CidadeDAO cidadeDAO = new CidadeDAO();
+		List<Cidade> resultado = cidadeDAO.listar();
+	}
+
+}

@@ -1,0 +1,14 @@
+package br.com.cpweb.DAO;
+
+import org.junit.Test;
+
+import br.com.cpweb.domain.UF;
+
+public class PaisDAOTest {
+	@Test
+	public void salvar(){
+		UF uf = new UF(){
+			uf.setNome("RJ";)
+		}
+	}
+}

@@ -1,0 +1,30 @@
+package br.com.cpweb.bean;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
+import org.omnifaces.util.Messages;
+
+import br.com.cpweb.DAO.EstadoDAO;
+import br.com.cpweb.domain.Estado;
+import br.com.cpweb.domain.Pais;
+
+@SuppressWarnings("serial")
+@ManagedBean
+@ViewScoped
+public class EstadoBean implements Serializable {
+	private List<Cidade> cidades;
+
+	public List<Cidade> getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
+	}
+	
+	
+}

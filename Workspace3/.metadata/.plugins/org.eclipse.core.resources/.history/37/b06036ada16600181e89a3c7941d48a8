@@ -1,0 +1,16 @@
+package br.com.cpweb.DAO;
+
+import org.junit.Test;
+import br.com.cpweb.domain.Pais;
+
+public class PaisDAOTest {
+	@Test
+	public void salvar(){
+		Pais pais = new Pais();
+		pais.setCdpais("000001");
+		pais.setNome("Brasil");
+		
+		PaisDAO paisDAO = new PaisDAO();
+		paisDAO.salvar(pais);
+		}
+	}

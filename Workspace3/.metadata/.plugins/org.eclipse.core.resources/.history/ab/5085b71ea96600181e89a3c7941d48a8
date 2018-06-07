@@ -1,0 +1,29 @@
+package br.com.cpweb.DAO;
+
+import org.junit.Test;
+
+import br.com.cpweb.domain.Cidade;
+import br.com.cpweb.domain.Estado;
+import br.com.cpweb.domain.Pais;
+
+public class CidadeDAOTest {
+	
+	@Test
+	public void salvar(){
+		PaisDAO paisDAO = new PaisDAO();
+		Pais pais = paisDAO.buscar(1L);
+		
+		EstadoDAO estadoDAO = new EstadoDAO();
+		Estado estado = estadoDAO.buscar(1L);
+		
+		Cidade cidade = new Cidade();
+		cidade.setCdcidade("000001");
+		cidade.setNome("Rio de Janeiro");
+		cidade.setUf(estado);
+		cidade.setPais(pais);
+		
+		CidadeDAO cidadeDAO = new CidadeDAO();
+		cidadeDAO.salvar(cidade);
+	}
+
+}

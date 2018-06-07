@@ -1,0 +1,30 @@
+package br.com.cpweb.bean;
+
+import java.io.Serializable;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
+
+import org.omnifaces.util.Messages;
+
+import br.com.cpweb.domain.Estado;
+
+@SuppressWarnings("serial")
+@ManagedBean
+@ViewScoped
+public class EstadoBean implements Serializable {
+	private Estado estado;
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public void salvar() {
+		Messages.addGlobalInfo("Cadastro efetuado com sucesso!");
+		;
+	}
+}
