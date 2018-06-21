@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Produtos</title>
+		<h:outputScript library="js" name="scripts.js" />
+</h:head>
+<h:body>
+
+	<p:growl id="mensagem" />
+
+	<!-- FORM DA LISTAGEM -->
+	<h:form id="formListagem">
+
+		<!-- PAINEL DA LISTAGEM -->
+		<p:panel header="Produtos - Listagem">
+
+			<!-- TABELA -->
+			<p:dataTable emptyMessage="Nenhum registro encontrado."
+				paginator="true" value="#{produtoBean.produtos}" var="produto"
+				rows="10" id="tabela">
+
+				<!-- BOTÃO NOVO DA LISTAGEM -->
+				<f:facet name="header">
+					<p:commandButton value="Novo" actionListener="#{produtoBean.novo}"
+						oncomplete="PF('dialogo').show();"
+						update=":mensagem :formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</f:facet>
+
+				<!-- CABEÇALHOS DA LISTAGEM -->
+				<p:column headerText="Código" sortBy="#{produto.cdproduto}"
+					filterBy="#{produto.cdproduto}">
+					<h:outputText value="#{produto.cdproduto}" />
+				</p:column>
+
+				<p:column headerText="Nome" sortBy="#{produto.descricao}"
+					filterBy="#{produto.descricao}">
+					<h:outputText value="#{produto.descricao}" />
+				</p:column>
+
+				<p:column headerText="Quantidade" sortBy="#{produto.quantidade}">
+					<h:outputText value="#{produto.quantidade}" />
+				</p:column>
+
+				<p:column headerText="Preço" sortBy="#{produto.preco}">
+					<h:outputText value="#{produto.preco}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Fabricante" sortBy="#{produto.fabricante.nome}"
+					filterBy="#{produto.fabricante.nome}">
+					<h:outputText value="#{produto.fabricante.nome}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{produtoBean.excluir}"
+						update=":mensagem :formListagem:tabela">
+						<p:confirm header="Confirmação"
+							message="Deseja excluir o produto?" icon="ui-icon-alert" />
+						<f:attribute name="produtoSelecionado" value="#{produto}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{produtoBean.editar}"
+						update=":mensagem :formCadastro:painel"
+						oncomplete="PF('dialogo').show();">
+						<f:attribute name="produtoSelecionado" value="#{produto}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+		</p:panel>
+	</h:form>
+
+	<!-- TELA DE CADASTRO -->
+	<p:dialog header="Produtos - Cadastro" widgetVar="dialogo"
+		closable="false" draggable="true" resizable="false" modal="true">
+
+		<!-- FORM DA TELA DE CADASTRO -->
+		<h:form id="formCadastro" enctype="multipart/form-data">
+
+			<!-- PAINEL DA TELA DE CADASTRO -->
+			<p:panelGrid id="painel" columns="4">
+				<p:outputLabel for="codigo" value="Código: " />
+				<p:inputText id="codigo" size="5" maxlength="6"
+					value="#{produtoBean.produto.cdproduto}" required="true"
+					requiredMessage="O campo 'Código:' é obrigatório.">
+					<f:convertNumber integerOnly="true"/>
+				</p:inputText>
+
+				<p:outputLabel for="descricao" value="Descrição:" />
+				<p:inputText id="descricao" maxlength="50" size="30"
+					value="#{produtoBean.produto.descricao}" required="true"
+					requiredMessage="O campo 'Descrição' é obrigatório" />
+
+				<p:outputLabel for="quantidade" value="Quantidade:" />
+				<p:inputText id="quantidade" maxlength="5" size="10"
+					value="#{produtoBean.produto.quantidade}" required="true"
+					requiredMessage="O campo 'Quantidade' é obrigatório"
+					converterMessage="Informe um valor válido para o campo 'Quantidade'"
+					validatorMessage="O valor mínimo para quantidade é 0">
+					<f:validateLongRange minimum="0" />
+				</p:inputText>
+
+				<p:outputLabel for="preco" value="Preço:" />
+				<p:inputText id="preco" maxlength="7" size="10"
+					value="#{produtoBean.produto.preco}" required="true"
+					requiredMessage="O campo 'Preço' é obrigatório"
+					converterMessage="Informe um valor válido para o campo 'Preço''"
+					validatorMessage="O valor mínimo para preço é 0">
+					<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					<f:validateDoubleRange minimum="0" />
+				</p:inputText>
+
+				<p:outputLabel for="pesobruto" value="Peso Bruto:" />
+				<p:inputText id="pesobruto" maxlength="7" size="10"
+					value="#{produtoBean.produto.pesobruto}" required="true"
+					requiredMessage="O campo 'Peso Bruto:' é obrigatório"
+					converterMessage="Informe um valor válido para o campo 'Peso Bruto:''"
+					validatorMessage="O valor mínimo para peso bruto é 0">
+					<f:validateDoubleRange minimum="0" />
+				</p:inputText>
+
+				<p:outputLabel for="pesoliq" value="Peso Líquido:" />
+				<p:inputText id="pesoliq" maxlength="7" size="10"
+					value="#{produtoBean.produto.pesoliquido}" required="true"
+					requiredMessage="O campo 'Peso Líquido:' é obrigatório"
+					converterMessage="Informe um valor válido para o campo 'Peso Líquido:''"
+					validatorMessage="O valor mínimo para peso líquido é 0">
+					<f:validateDoubleRange minimum="0" />
+				</p:inputText>
+
+				<p:outputLabel for="origem" value="Origem:" />
+				<p:selectOneRadio id="origem" required="true"
+					requiredMessage="Selecione uma Origem para o produto">
+					<f:selectItem itemValue="NACIONAL" itemLabel="Nacional" />
+					<f:selectItem itemValue="IMPORTADO" itemLabel="Importado" />
+				</p:selectOneRadio>
+
+				<p:outputLabel for="data" value="Data de cadastro:" />
+				<p:calendar id="data" value="#{produtoBean.produto.dtcadastro}"
+					required="true"
+					requiredMessage="O campo 'Data de cadastro:' é obrigatório"
+					converterMessage="A data informada é inválida" locale="pt_BR" />
+
+				<p:outputLabel for="ativo" value="Ativo:" />
+				<p:selectBooleanCheckbox id="ativo" value="#{produtoBean.produto.ativo}" />
+
+				<p:outputLabel value="ICMS: " />
+				<p:selectOneMenu filter="true" partialSubmit="true"
+					value="#{produtoBean.produto.icms}"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					requiredMessage="O campo 'ICMS: ' é obrigatório">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um ICMS" />
+					<f:selectItems value="#{produtoBean.icmss}" var="icms"
+						itemValue="#{icms}" itemLabel="#{icms.descricao}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="classificacaofiscal" value="Classificação Fiscal: " />
+				<p:selectOneMenu id="classificacaofiscal" filter="true" partialSubmit="true"
+					value="#{produtoBean.produto.classificacaofiscal}"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					requiredMessage="O campo 'Classificação Fiscal: ' é obrigatório">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione uma classificação fiscal" />
+					<f:selectItems value="#{produtoBean.classificacoesfiscais}"
+						var="classificacaofiscal" itemValue="#{classificacaofiscal}"
+						itemLabel="#{classificacaofiscal.classificacao}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="grupo" value="Grupo: " />
+				<p:selectOneMenu id="grupo" filter="true" partialSubmit="true"
+					value="#{produtoBean.produto.grupoproduto}"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					requiredMessage="O campo 'Grupo: ' é obrigatório">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um grupo" />
+					<f:selectItems value="#{produtoBean.gruposprodutos}"
+						var="grupoproduto" itemValue="#{grupoproduto}"
+						itemLabel="#{grupoproduto.descricao}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="fornecedor" value="Fornecedor: " />
+				<p:selectOneMenu id="fornecedor" filter="true" partialSubmit="true"
+					value="#{produtoBean.produto.fornecedor}"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					requiredMessage="O campo 'Fornecedor: ' é obrigatório">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um fornecedor" />
+					<f:selectItems value="#{produtoBean.fornecedores}" var="fornecedor"
+						itemValue="#{fornecedor}" itemLabel="#{pessoa.nome}" />
+					<p:ajax listener="#{produtoBean.popular}" update=":formCadastro:fornecedor" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="empresa" value="Empresa: " />
+				<p:selectOneMenu id="empresa" filter="true" partialSubmit="true"
+					value="#{produtoBean.produto.empresa}"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					requiredMessage="O campo 'Empresa: ' é obrigatório">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione uma empresa" />
+					<f:selectItems value="#{produtoBean.empresas}" var="empresa"
+						itemValue="#{empresa}" itemLabel="#{empresa.nomeempresa}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="unidade" value="Unidade: " />
+				<p:selectOneMenu id="unidade" filter="true" partialSubmit="true"
+					value="#{produtoBean.produto.unidade}"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					requiredMessage="O campo 'Unidade: ' é obrigatório">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione uma unidade" />
+					<f:selectItems value="#{produtoBean.unidades}" var="unidade"
+						itemValue="#{unidade}" itemLabel="#{unidade.descricaounidade}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="tipo" value="Tipo: " />
+				<p:selectOneMenu id="tipo" filter="true" partialSubmit="true"
+					value="#{produtoBean.produto.tipoproduto}"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					requiredMessage="O campo 'Tipo: ' é obrigatório">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um tipo de produto" />
+					<f:selectItems value="#{produtoBean.tiposprodutos}"
+						var="tipoproduto" itemValue="#{tipoproduto}"
+						itemLabel="#{tipoproduto.descricaotipoproduto}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="fabricante" value="Fabricante: " />
+				<p:selectOneMenu id="fabricante" filter="true" partialSubmit="true"
+					value="#{produtoBean.produto.fabricante}"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					requiredMessage="O campo 'Fabricante: ' é obrigatório">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um fabricante" />
+					<f:selectItems value="#{produtoBean.fabricantes}" var="fabricante"
+						itemValue="#{fabricante}" itemLabel="#{fabricante.nome}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="obs" value="Observação:" />
+				<p:inputTextarea id="obs" maxlength="200" rows="3" addLine="3"
+					autoResize="false" cols="75"
+					value="#{produtoBean.produto.observacao}" />
+					
+				<p:outputLabel for="upload" value="Upload: " />
+				<p:fileUpload id="upload" mode="advanced" 
+					fileUploadListener="#{produtoBean.upload}" 
+					update=":mensagem :formCadastro:upload" required="false" />
+					
+				<p:outputLabel for="foto" value="Foto: " />
+				<p:graphicImage id="foto" value="#{imagemBean.foto}">
+					<f:param name="caminho" value="#{produtoBean.produto.caminho}" />
+				</p:graphicImage>
+			</p:panelGrid> 
+
+			<p:panelGrid columns="2">
+				<p:commandButton value="Salvar"
+					actionListener="#{produtoBean.salvar}"
+					update=":mensagem :formCadastro:painel :formListagem:tabela" />
+				<p:commandButton value="Cancelar" oncomplete="PF('dialogo').hide();" />
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+
+</h:body>
+</html>

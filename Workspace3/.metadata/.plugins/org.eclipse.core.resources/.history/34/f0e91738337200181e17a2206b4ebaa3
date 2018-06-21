@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Empresas</title>
+</h:head>
+<h:body>
+
+	<p:growl id="mensagem" />
+
+	<!-- FORM DA LISTAGEM -->
+	<h:form id="formListagem">
+
+		<!-- PAINEL DA LISTAGEM -->
+		<p:panel header="Empresas - Listagem">
+
+			<!-- TABELA -->
+			<p:dataTable emptyMessage="Nenhum registro encontrado."
+				paginator="true" value="#{empresaBean.empresas}" var="empresa"
+				rows="10" id="tabela">
+
+				<!-- BOTÃO NOVO DA LISTAGEM -->
+				<f:facet name="header">
+					<p:commandButton value="Novo" actionListener="#{empresaBean.novo}"
+						oncomplete="PF('dialogo').show();"
+						update=":mensagem :formCadastro:painel :formCadastro:painel1">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</f:facet>
+
+				<!-- CABEÇALHOS DA LISTAGEM -->
+				<p:column headerText="Código" sortBy="#{empresa.cdempresa}"
+					filterBy="#{empresa.cdempresa}">
+					<h:outputText value="#{empresa.cdempresa}" />
+				</p:column>
+
+				<p:column headerText="Nome" sortBy="#{empresa.nomeempresa}"
+					filterBy="#{empresa.nomeempresa}">
+					<h:outputText value="#{empresa.nomeempresa}" />
+				</p:column>
+
+				<p:column headerText="CNPJ / CPF" sortBy="#{empresa.cpfcnpj}"
+					filterBy="#{empresa.cpfcnpj}">
+					<h:outputText value="#{empresa.cpfcnpj}" />
+				</p:column>
+
+				<p:column headerText="Telefone" sortBy="#{empresa.telefone}"
+					filterBy="#{empresa.telefone}">
+					<h:outputText value="#{empresa.telefone}" />
+				</p:column>
+
+				<p:column headerText="Regime" sortBy="#{empresa.regime}"
+					filterBy="#{empresa.regime}">
+					<h:outputText value="#{empresa.regime}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{empresaBean.excluir}"
+						update=":mensagem :formListagem:tabela">
+						<p:confirm header="Confirmação"
+							message="Deseja excluir a empresa?" icon="ui-icon-alert" />
+						<f:attribute name="empresaSelecionada" value="#{empresa}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{empresaBean.editar}"
+						update=":mensagem :formCadastro:painel :formCadastro:painel1"
+						oncomplete="PF('dialogo').show();">
+						<f:attribute name="empresaSelecionada" value="#{empresa}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+		</p:panel>
+	</h:form>
+
+	<!-- TELA DE CADASTRO -->
+	<p:dialog header="Empresas - Cadastro" widgetVar="dialogo"
+		closable="false" draggable="false" resizable="false" modal="true">
+
+		<!-- FORM DA TELA DE CADASTRO -->
+		<h:form id="formCadastro">
+
+			<!-- PAINEL DA TELA DE CADASTRO -->
+			<p:outputLabel value="Dados principais: " />
+			<p:panelGrid id="painel" columns="4">
+
+				<p:outputLabel for="codigo" value="Código: " />
+				<p:inputText id="codigo" size="5" maxlength="6"
+					value="#{empresaBean.empresa.cdempresa}" required="true"
+					requiredMessage="O campo 'Código:' é obrigatório." />
+
+				<p:outputLabel value="Descrição:" />
+				<p:inputText maxlength="50" size="60"
+					value="#{empresaBean.empresa.nomeempresa}" required="true"
+					requiredMessage="O campo 'Descrição' é obrigatório" />
+
+				<p:outputLabel value="CNPJ/CPF:" />
+				<p:inputText maxlength="19" size="15"
+					value="#{empresaBean.empresa.cpfcnpj}" required="true"
+					requiredMessage="O campo 'CNPJ/CPF:' é obrigatório" />
+
+				<p:outputLabel value="Código CNAE:" />
+				<p:inputText maxlength="7" size="10"
+					value="#{empresaBean.empresa.cnae}" required="true"
+					requiredMessage="O campo 'Código CNAE:' é obrigatório" />
+
+				<p:outputLabel value="Inscrição Estadual:" />
+				<p:inputText maxlength="7" size="10"
+					value="#{empresaBean.empresa.inscricaoestadual}" required="true"
+					requiredMessage="O campo 'Inscrição Estadual:' é obrigatório" />
+
+				<p:outputLabel value="Inscrição Municipal:" />
+				<p:inputText maxlength="7" size="10"
+					value="#{empresaBean.empresa.inscricaomunicipal}" required="true"
+					requiredMessage="O campo 'Inscrição Municipal:' é obrigatório" />
+
+				<p:outputLabel value="Data de cadastro:" />
+				<p:calendar value="#{empresaBean.empresa.dtcadastro}"
+					required="true"
+					requiredMessage="O campo 'Data de cadastro:' é obrigatório" />
+
+				<p:outputLabel value="Ativo:" />
+				<p:selectBooleanCheckbox value="#{empresaBean.empresa.ativo}"  />
+
+				<p:outputLabel value="Regime de tributação: " />
+				<p:selectOneMenu filter="true" partialSubmit="true"
+					value="#{empresaBean.empresa.regime}"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					requiredMessage="O campo 'Regime de tributação: ' é obrigatório">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um Regime de tributação" />
+					<f:selectItems value="#{empresaBean.regimes}" var="regime"
+						itemValue="#{regime}" itemLabel="#{regime.descricao}" />
+				</p:selectOneMenu>
+			</p:panelGrid>
+
+			<p:ribbon />
+			<p:outputLabel value="Complementares: " />
+			<p:panelGrid id="painel1" columns="4">
+				<p:outputLabel value="CEP:" />
+				<p:inputMask mask="99999-999" size="10"
+					value="#{empresaBean.empresa.cep}"
+					converterMessage="Informe um valor válido para o campo 'CEP:'" />
+
+				<p:outputLabel value="Logradouro:" />
+				<p:inputText maxlength="150" size="60"
+					value="#{empresaBean.empresa.endereco}"
+					converterMessage="Informe um valor válido para o campo 'Logradouro:'" />
+
+				<p:outputLabel value="Nr.:" />
+				<p:inputNumber maxlength="7" size="10"
+					value="#{empresaBean.empresa.nr}"
+					converterMessage="Informe um valor válido para o campo 'Nr:'" />
+
+				<p:outputLabel value="Complemento:" />
+				<p:inputText maxlength="150" size="60"
+					value="#{empresaBean.empresa.complemento}"
+					converterMessage="Informe um valor válido para o campo 'Complemento:'" />
+
+				<p:outputLabel value="E-mail:" />
+				<p:inputText maxlength="7" size="10"
+					value="#{empresaBean.empresa.email}"
+					converterMessage="Informe um valor válido para o campo 'E-mail:'" />
+
+				<p:outputLabel value="Telefone:" />
+				<p:inputText maxlength="100" size="40"
+					value="#{empresaBean.empresa.telefone}"
+					converterMessage="Informe um valor válido para o campo 'Telefone:'" />
+
+				<p:outputLabel value="Bairro: " />
+				<p:selectOneMenu filter="true" partialSubmit="true"
+					value="#{empresaBean.empresa.bairro}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um bairro" />
+					<f:selectItems value="#{empresaBean.bairros}" var="bairro"
+						itemValue="#{bairro}" itemLabel="#{bairro.nome}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Cidade: " />
+				<p:selectOneMenu filter="true" partialSubmit="true"
+					value="#{empresaBean.empresa.cidade}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione uma cidade" />
+					<f:selectItems value="#{empresaBean.cidades}" var="cidade"
+						itemValue="#{cidade}" itemLabel="#{cidade.nome}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Estado: " />
+				<p:selectOneMenu filter="true" partialSubmit="true"
+					value="#{empresaBean.empresa.estado}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um estado" />
+					<f:selectItems value="#{empresaBean.estados}" var="estado"
+						itemValue="#{estado}" itemLabel="#{estado.nome}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="País: " />
+				<p:selectOneMenu filter="true" partialSubmit="true"
+					value="#{empresaBean.empresa.pais}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um país" />
+					<f:selectItems value="#{empresaBean.paises}" var="pais"
+						itemValue="#{pais}" itemLabel="#{pais.nome}" />
+				</p:selectOneMenu>
+			</p:panelGrid>
+			<p:panelGrid columns="2">
+				<p:commandButton value="Salvar"
+					actionListener="#{empresaBean.salvar}"
+					update=":mensagem :formCadastro:painel :formCadastro:painel1 :formListagem:tabela" />
+				<p:commandButton value="Cancelar" oncomplete="PF('dialogo').hide();" />
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+
+</h:body>
+</html>

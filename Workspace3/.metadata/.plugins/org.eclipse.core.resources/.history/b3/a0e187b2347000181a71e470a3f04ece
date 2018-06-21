@@ -1,0 +1,120 @@
+package br.com.cpweb.bean;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
+
+import org.omnifaces.util.Messages;
+
+import br.com.cpweb.DAO.EstadoDAO;
+import br.com.cpweb.DAO.IcmsDAO;
+import br.com.cpweb.domain.Estado;
+import br.com.cpweb.domain.Icms;
+
+@SuppressWarnings("serial")
+@ManagedBean
+@ViewScoped
+public class IcmsBean implements Serializable {
+	private Icms icms;
+	private List<Icms> icmss;
+	private List<Estado> estados;
+
+
+	public Icms getIcms() {
+		return icms;
+	}
+
+	public void setIcms(Icms icms) {
+		this.icms = icms;
+	}
+
+	public List<Icms> getIcmss() {
+		return icmss;
+	}
+
+	public void setIcmss(List<Icms> icmss) {
+		this.icmss = icmss;
+	}
+
+	public List<Estado> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<Estado> estados) {
+		this.estados = estados;
+	}
+
+	// Métodos liscar, buscar, gravar, editar e excluir
+	@PostConstruct
+	public void listar() {
+		try {
+			IcmsDAO icmsDAO = new IcmsDAO();
+			icmss = icmsDAO.listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar listar ICMS");
+			erro.printStackTrace();
+		}
+	}
+
+	public void novo() {
+		try {
+			icms = new Icms();
+
+			IcmsDAO icmsDAO = new IcmsDAO();
+			icmss = icmsDAO.listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar gerar um novo ICMS");
+			erro.printStackTrace();
+		}
+		
+	}
+
+	public void salvar() {
+		try {
+			IcmsDAO icmsDAO = new IcmsDAO();
+			icmsDAO.merge(icms);
+			icms = new Icms();
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estados = estadoDAO.listar();
+			icmss = icmsDAO.listar();
+			Messages.addGlobalInfo("ICMS salvo com sucesso");
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar salvar o ICMS");
+			erro.printStackTrace();
+		}
+	}
+
+	public void excluir(ActionEvent evento) {
+		try {
+			icms = (Icms) evento.getComponent().getAttributes()
+					.get("icmsSelecionado");
+
+			IcmsDAO icmsDAO = new IcmsDAO();
+			icmsDAO.excluir(icms);
+			icmss = icmsDAO.listar();
+
+			Messages.addGlobalInfo("ICMS removido com sucesso");
+
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar remover o ICMS");
+			erro.printStackTrace();
+		}
+	}
+
+	public void editar(ActionEvent evento) {
+		try {
+			icms = (Icms) evento.getComponent().getAttributes().get("icmsSelecionado");
+
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estados = estadoDAO.listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar selecionar um Estado");
+			erro.printStackTrace();
+		}
+
+	}
+}

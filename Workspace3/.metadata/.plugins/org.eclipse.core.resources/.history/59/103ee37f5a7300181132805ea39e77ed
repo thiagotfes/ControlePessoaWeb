@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+
+	<h:outputStylesheet library="/main/webapp/resources/css"
+		name="style.css" />
+
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>SoMo Web</title>
+</h:head>
+<h:body>
+	<h:form>	
+		<div id="geral">
+			<div id="topo">
+				<p:graphicImage library="images" name="logo.png"
+					styleClass="imagemCentralizada" />
+			</div>
+
+			<div id="cabecalho"></div>
+			<p:menubar>
+				<p:submenu label="Arquivo">
+					<p:menuitem value="Sair" />
+				</p:submenu>
+
+				<p:submenu label="CRM">
+					<p:menuitem value="Cliente" />
+					<p:menuitem value="Fabricante" />
+					<p:menuitem value="Fornecedor" />
+					<p:menuitem value="Funcionário" />
+				</p:submenu>
+				
+				<p:submenu label="Estoque">
+					<p:menuitem value="Produto" />
+					<p:submenu label="Cadastros">
+						<p:menuitem value="Classificação Fiscal" />
+						<p:menuitem value="Grupo de Produto" />
+						<p:menuitem value="ICMS" />
+						<p:menuitem value="Tipo de Produto" />
+						<p:menuitem value="Unidade" />
+					</p:submenu>
+				</p:submenu>
+
+				<p:submenu label="Configurador Geral">
+					<p:submenu label="Endereço">
+						<p:menuitem value="Bairro" />
+						<p:menuitem value="Cidade" />
+						<p:menuitem value="Estado" />
+						<p:menuitem value="País" />
+					</p:submenu>
+					<p:submenu label="Utilidades">
+						<p:menuitem value="Cadastro de Pessoa" />
+						<p:menuitem value="Cadastro de Usuário" />
+						<p:menuitem value="Tipo de Usuário" />
+					</p:submenu>
+					<p:submenu label="Cadastros">
+						<p:menuitem value="Classificação de Pessoa" />
+						<p:menuitem value="Estado Civil" />
+						<p:menuitem value="Genero" />
+						<p:menuitem value="Tipo de Pessoa" />
+					</p:submenu>
+				<p:submenu label="Empresa">
+						<p:menuitem value="Nova Empresa" />
+						<p:menuitem value="Regime Tributário" />
+					</p:submenu>											
+				</p:submenu>
+
+				<p:submenu label="Faturamento">
+					<p:menuitem value="Venda" />
+				</p:submenu>
+
+				<p:submenu label="Ajuda">
+					<p:menuitem value="Sobre" />
+				</p:submenu>
+			</p:menubar>
+			<div id="conteudo"></div>
+		</div>
+	</h:form>
+</h:body>
+</html>

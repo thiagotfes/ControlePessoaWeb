@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Histórico</title>
+</h:head>
+<h:body>
+
+	<p:growl id="mensagem" />
+
+	<h:form id="formulario">
+		<p:panel header="Historico">
+			<h:panelGrid columns="3">
+
+				<p:outputLabel for="codigo" value="Código: " />
+				<p:inputText id="codigo" size="20" maxlength="13" required="true"
+					requiredMessage="O campo 'Código:' é obrigatório"
+					value="#{historicoBean.produto.codigo}"
+					converterMessage="O valor informado no campo código é inválido"
+					validatorMessage="Informe um valor entre 1 e 9999999999999 para o campo 'Código:'">
+					<f:validateLongRange minimum="1" maximum="9999999999999" />
+				</p:inputText>
+				<p:commandButton icon="ui-icon-search"
+					update=":mensagem :formulario:painelDados"
+					actionListener="#{historicoBean.buscarCodigo}" 
+					process="@this :formulario:codigo"/>
+			</h:panelGrid>
+
+			<h:panelGroup layout="block" id="painelDados">
+				<h:panelGrid columns="2"
+					rendered="#{historicoBean.exibirPainelDeDados}">
+					<h:outputLabel value="Código: " />
+					<h:outputText value="#{historicoBean.produto.cdproduto}" />
+
+					<h:outputLabel value="Descrição: " />
+					<h:outputText value="#{historicoBean.produto.descricao}" />
+
+					<h:outputLabel value="Preço: " />
+					<h:outputText value="#{historicoBean.produto.preco}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					</h:outputText>
+
+					<h:outputLabel value="Quantidade: " />
+					<h:outputText value="#{historicoBean.produto.quantidade}" />
+
+					<h:outputLabel value="NCM: " />
+					<h:outputText
+						value="#{historicoBean.produto.classificacaofiscal.classificacao}" />
+
+					<h:outputLabel value="Fabricante: " />
+					<h:outputText value="#{historicoBean.produto.fabricante.nome}" />
+
+					<h:outputLabel value="Fornecedor: " />
+					<h:outputText value="#{historicoBean.produto.fornecedor.nome}" />
+
+					<h:outputLabel value="Grupo de produto: " />
+					<h:outputText
+						value="#{historicoBean.produto.grupoproduto.descricao}" />
+
+					<h:outputLabel value="Origem: " />
+					<h:outputText value="#{historicoBean.produto.origem}" />
+
+					<h:outputLabel value="Peso Bruto: " />
+					<h:outputText value="#{historicoBean.produto.pesobruto}" />
+
+					<h:outputLabel value="Peso Líquido: " />
+					<h:outputText value="#{historicoBean.produto.pesoliquido}" />
+
+					<h:outputLabel value="Empresa: " />
+					<h:outputText value="#{historicoBean.produto.empresa.nomeempresa}" />
+
+					<h:outputLabel value="Tipo de Produto: " />
+					<h:outputText
+						value="#{historicoBean.produto.tipoproduto.descricaotipoproduto}" />
+
+					<h:outputLabel value="Unidade: " />
+					<h:outputText
+						value="#{historicoBean.produto.unidade.descricaounidade}" />
+
+					<h:outputLabel value="Data de Cadastro: " />
+					<h:outputText value="#{historicoBean.produto.dtcadastro}">
+						<f:convertDateTime pattern="dd/MM/YYYY" />
+					</h:outputText>
+
+					<h:outputLabel value="ICMS: " />
+					<h:outputText value="#{historicoBean.produto.icms.descricao}" />
+
+					<h:outputLabel value="Observação do Produto: " />
+					<h:outputText value="#{historicoBean.produto.observacao}" />
+
+					<h:outputLabel for="observacoes" value="Observações: " />
+					<p:inputTextarea id="observacoes" required="true"
+						requiredMessage="O campo 'Observações:' é obrigatório" rows="5"
+						cols="50" autoResize="false"  />
+				</h:panelGrid>
+				
+				<h:panelGrid>
+					<p:commandButton value="Salvar" />
+				</h:panelGrid>
+			</h:panelGroup>
+		</p:panel>
+
+
+	</h:form>
+</h:body>
+</html>

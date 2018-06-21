@@ -1,0 +1,41 @@
+package br.com.cpweb.service;
+
+import java.util.List;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+
+import com.google.gson.Gson;
+
+import br.com.cpweb.DAO.FabricanteDAO;
+import br.com.cpweb.domain.Fabricante;
+
+@Path("fabricante")
+public class FabricanteService {
+	
+	////http://localhost:8080/CpWeb/rest/fabricante
+	@GET
+	public String listar(){
+		FabricanteDAO fabricanteDAO = new FabricanteDAO();
+		List<Fabricante> fabricantes = fabricanteDAO.listar("nome");
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(fabricantes);
+		
+		return json;
+	}
+	
+	//http://localhost:8080/CpWeb/rest/fabricante/10
+	@GET
+	@Path("{codigo}")
+	public String buscar(Long codigo){
+		FabricanteDAO fabricanteDAO = new FabricanteDAO();
+		Fabricante fabricante = fabricanteDAO.buscar(codigo);
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(fabricante);
+		
+		return json;
+	}
+
+}

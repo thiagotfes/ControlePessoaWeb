@@ -1,0 +1,34 @@
+package br.com.cpweb.DAO;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+import br.com.cpweb.domain.Cidade;
+import br.com.cpweb.domain.Pessoa;
+import br.com.cpweb.util.HibernateUtil;
+
+public class PessoaDAO extends GenericDAO<Pessoa> {
+	
+	public List<Pessoa> buscarPorFornecedor(String pessoaNome){
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		String sql = "select * from pessoa where classificacao='Fornecedor'";
+		try {
+			Criteria consulta = sessao.createCriteria(Pessoa.class);
+			consulta.addQueryHint(sql);
+			consulta.addOrder(Order.asc("nome"));
+			@SuppressWarnings("unchecked")
+			List<Pessoa> resultado = consulta.list();
+			return resultado;
+		} catch (RuntimeException erro) {
+			throw erro;
+		} finally {
+			sessao.close();
+		}
+		
+	
+	}
+}

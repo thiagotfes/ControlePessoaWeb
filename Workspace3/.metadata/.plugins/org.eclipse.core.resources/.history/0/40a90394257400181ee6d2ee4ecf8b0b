@@ -1,0 +1,23 @@
+package br.com.cpweb.bean;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+import br.com.cpweb.domain.Usuario;
+
+@ManagedBean
+@SessionScoped
+public class AutenticacaoBean {
+
+	private Usuario usuario;
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
+	
+}

@@ -1,67 +1,138 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Cidades</title>
-</h:head>
-<h:body>
-	<h:form>
-		<p:panel header="Cidades - Listagem">
-			<p:dataTable emptyMessage="Nenhum registro encontrado."
-				paginator="true">
-				<f:facet name="header">
-					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();" />
-				</f:facet>
-				<p:column headerText="C�digo" sortBy="" filterBy="">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/modelo.xhtml">
 
-				</p:column>
+	<ui:define name="conteudo">
 
-				<p:column headerText="Nome" sortBy="" filterBy="">
+		<!-- FORM DA LISTAGEM -->
+		<h:form id="formListagem">
 
-				</p:column>
+			<!-- PAINEL DA LISTAGEM -->
+			<p:panel header="Cidades - Listagem">
 
-				<p:column headerText="UF">
+				<!-- TABELA -->
+				<p:dataTable emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{cidadeBean.cidades}" var="cidade"
+					rows="10" id="tabela">
 
-				</p:column>
+					<!-- BOTÃO NOVO DA LISTAGEM -->
+					<f:facet name="header">
+						<p:commandButton icon="ui-icon-plus" actionListener="#{cidadeBean.novo}"
+							oncomplete="PF('dialogo').show();"
+							update=":mensagem :formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
 
-				<p:column headerText="Pa�s">
+					<!-- CABEÇALHOS DA LISTAGEM -->
+					<p:column headerText="Código" sortBy="#{cidade.cdcidade}"
+						filterBy="#{cidade.cdcidade}">
+						<h:outputText value="#{cidade.cdcidade}" />
+					</p:column>
 
-				</p:column>
+					<p:column headerText="Nome" sortBy="#{cidade.nome}"
+						filterBy="#{cidade.nome}">
+						<h:outputText value="#{cidade.nome}" />
+					</p:column>
 
-			</p:dataTable>
-		</p:panel>
-	</h:form>
+					<p:column headerText="Estado" sortBy="#{cidade.estado.nome}"
+						filterBy="#{cidade.estado.nome}">
+						<h:outputText value="#{cidade.estado.nome}" />
+					</p:column>
 
-	<p:dialog header="Cidades - Cadastro" widgetVar="dialogo"
-		closable="false" draggable="false" resizable="false" modal="true">
-		<h:form>
-			<p:panelGrid columns="2">
-				<p:outputLabel value="C�digo: " />
-				<p:inputText size="5" maxlength="6" />
+					<p:column headerText="País" sortBy="#{cidade.pais.nome}"
+						filterBy="#{cidade.pais.nome}">
+						<h:outputText value="#{cidade.pais.nome}" />
+					</p:column>
 
-				<p:outputLabel value="Nome: " />
-				<p:inputText size="60" maxlength="50" />
+					<p:column headerText="Opções">
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{cidadeBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir a cidade?" icon="ui-icon-alert" />
+							<f:attribute name="cidadeSelecionada" value="#{cidade}" />
+						</p:commandButton>
+						<p:commandButton icon="ui-icon-pencil"
+							actionListener="#{cidadeBean.editar}"
+							update=":mensagem :formCadastro:painel"
+							oncomplete="PF('dialogo').show();">
+							<f:attribute name="cidadeSelecionada" value="#{cidade}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
 
-				<p:outputLabel value="UF: " />
-				<p:selectOneMenu filter="true">
-					<f:selectItem itemLabel="Selecione um estado" itemValue="" />
-				</p:selectOneMenu>
+				</p:dataTable>
 
-				<p:outputLabel value="Pa�s: " />
-				<p:selectOneMenu filter="true">
-					<f:selectItem itemLabel="Selecione um pa�s" itemValue="" />
-				</p:selectOneMenu>
-			</p:panelGrid>
-			<p:panelGrid columns="2" > 
-				<p:commandButton value="Salvar" />
-				<p:commandButton value="Cancelar" oncomplete="PF('dialogo').hide();" />
-			</p:panelGrid>
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+
+			</p:panel>
 		</h:form>
-	</p:dialog>
 
-</h:body>
-</html>
+		<!-- TELA DE CADASTRO -->
+		<p:dialog header="Cidades - Cadastro" widgetVar="dialogo"
+			closable="false" draggable="false" resizable="false" modal="true">
+
+			<!-- FORM DA TELA DE CADASTRO -->
+			<h:form id="formCadastro">
+
+				<!-- PAINEL DA TELA DE CADASTRO -->
+				<p:panelGrid id="painel" columns="4">
+					<p:outputLabel for="codigo" value="Código: " />
+					<p:inputNumber id="codigo" size="5" maxlength="6"
+						value="#{cidadeBean.cidade.cdcidade}" required="true"
+						requiredMessage="O campo 'Código:' é obrigatório." />
+
+					<p:outputLabel value="Descrição:" />
+					<p:inputText id="descricao" maxlength="50" size="60"
+						value="#{cidadeBean.cidade.nome}" required="true"
+						requiredMessage="O campo 'Descrição' é obrigatório" converter="upperCaseConverter">
+						<p:ajax event="blur" update="@this" />
+					</p:inputText>
+					<p:outputLabel value="UF: " />
+					<p:selectOneMenu id="estado" filter="true" partialSubmit="true"
+						value="#{cidadeBean.cidade.estado}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'UF: ' é obrigatório">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um Estado" />
+						<f:selectItems value="#{cidadeBean.estados}" var="estado"
+							itemValue="#{estado}" itemLabel="#{estado.nome}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="País: " />
+					<p:selectOneMenu id="pais" filter="true" partialSubmit="true"
+						value="#{cidadeBean.cidade.pais}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'País: ' é obrigatório">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um país" />
+						<f:selectItems value="#{cidadeBean.paises}" var="pais"
+							itemValue="#{pais}" itemLabel="#{pais.nome}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+
+				<p:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{cidadeBean.salvar}"
+						update=":mensagem :formCadastro:painel :formListagem:tabela" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogo').hide();" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

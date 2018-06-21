@@ -1,0 +1,249 @@
+package br.com.cpweb.bean;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
+
+import org.omnifaces.util.Messages;
+
+import br.com.cpweb.DAO.BairroDAO;
+import br.com.cpweb.DAO.CidadeDAO;
+import br.com.cpweb.DAO.ClassificacaoDAO;
+import br.com.cpweb.DAO.EstadoCivilDAO;
+import br.com.cpweb.DAO.EstadoDAO;
+import br.com.cpweb.DAO.GeneroDAO;
+import br.com.cpweb.DAO.PaisDAO;
+import br.com.cpweb.DAO.PessoaDAO;
+import br.com.cpweb.DAO.TipoPessoaDAO;
+import br.com.cpweb.domain.Bairro;
+import br.com.cpweb.domain.Cidade;
+import br.com.cpweb.domain.Classificacao;
+import br.com.cpweb.domain.Estado;
+import br.com.cpweb.domain.EstadoCivil;
+import br.com.cpweb.domain.Genero;
+import br.com.cpweb.domain.Pais;
+import br.com.cpweb.domain.Pessoa;
+import br.com.cpweb.domain.TipoPessoa;
+
+@SuppressWarnings("serial")
+@ManagedBean
+@ViewScoped
+public class PessoaBean implements Serializable {
+	private Pessoa pessoa;
+	private List<Pessoa> pessoas;
+	private List<Bairro> bairros;
+	private List<Cidade> cidades;
+	private Estado estado;
+	private List<Estado> estados;
+	private List<Pais> paises;
+	private List<Classificacao> classificacoes;
+	private List<EstadoCivil> estadoscivis;
+	private List<Genero> generos;
+	private List<TipoPessoa> tipospessoas;
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public List<Pessoa> getPessoas() {
+		return pessoas;
+	}
+
+	public void setPessoas(List<Pessoa> pessoas) {
+		this.pessoas = pessoas;
+	}
+
+	public List<Bairro> getBairros() {
+		return bairros;
+	}
+
+	public void setBairros(List<Bairro> bairros) {
+		this.bairros = bairros;
+	}
+
+	public List<Cidade> getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
+	}
+
+	public List<Estado> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<Estado> estados) {
+		this.estados = estados;
+	}
+
+	public List<Pais> getPaises() {
+		return paises;
+	}
+
+	public void setPaises(List<Pais> paises) {
+		this.paises = paises;
+	}
+
+	public List<Classificacao> getClassificacoes() {
+		return classificacoes;
+	}
+
+	public void setClassificacoes(List<Classificacao> classificacoes) {
+		this.classificacoes = classificacoes;
+	}
+
+	public List<EstadoCivil> getEstadoscivis() {
+		return estadoscivis;
+	}
+
+	public void setEstadoscivis(List<EstadoCivil> estadoscivis) {
+		this.estadoscivis = estadoscivis;
+	}
+
+	public List<Genero> getGeneros() {
+		return generos;
+	}
+
+	public void setGeneros(List<Genero> generos) {
+		this.generos = generos;
+	}
+
+	public List<TipoPessoa> getTipospessoas() {
+		return tipospessoas;
+	}
+
+	public void setTipospessoas(List<TipoPessoa> tipospessoas) {
+		this.tipospessoas = tipospessoas;
+	}
+
+	// Métodos liscar, buscar, gravar, editar e excluir
+	@PostConstruct
+	public void listar() {
+		try {
+			PessoaDAO pessoaDAO = new PessoaDAO();
+			pessoas = pessoaDAO.listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar listar as pessoas");
+			erro.printStackTrace();
+		}
+	}
+
+	public void novo() {
+		try {
+			pessoa = new Pessoa();
+
+			PessoaDAO pessoaDAO = new PessoaDAO();
+			pessoas = pessoaDAO.listar();
+			PaisDAO paisDAO = new PaisDAO();
+			paises = paisDAO.listar();
+			CidadeDAO cidadeDAO = new CidadeDAO();
+			cidades = cidadeDAO.listar();
+			BairroDAO bairroDAO = new BairroDAO();
+			bairros = bairroDAO.listar();
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estados = estadoDAO.listar();
+			ClassificacaoDAO classificacaoDAO = new ClassificacaoDAO();
+			classificacoes = classificacaoDAO.listar();
+			EstadoCivilDAO estadocivilDAO = new EstadoCivilDAO();
+			estadoscivis = estadocivilDAO.listar();
+			GeneroDAO generoDAO = new GeneroDAO();
+			generos = generoDAO.listar();
+			TipoPessoaDAO tipopessoaDAO = new TipoPessoaDAO();
+			tipospessoas = tipopessoaDAO.listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar gerar uma nova pessoa");
+			erro.printStackTrace();
+		}
+	}
+
+	public void salvar() {
+		try {
+			PessoaDAO pessoaDAO = new PessoaDAO();
+			pessoaDAO.merge(pessoa);
+			pessoa = new Pessoa();
+			PaisDAO paisDAO = new PaisDAO();
+			paises = paisDAO.listar();
+			CidadeDAO cidadeDAO = new CidadeDAO();
+			cidades = cidadeDAO.listar();
+			BairroDAO bairroDAO = new BairroDAO();
+			bairros = bairroDAO.listar();
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estados = estadoDAO.listar();
+			ClassificacaoDAO classificacaoDAO = new ClassificacaoDAO();
+			classificacoes = classificacaoDAO.listar();
+			EstadoCivilDAO estadocivilDAO = new EstadoCivilDAO();
+			estadoscivis = estadocivilDAO.listar();
+			GeneroDAO generoDAO = new GeneroDAO();
+			generos = generoDAO.listar();
+			TipoPessoaDAO tipopessoaDAO = new TipoPessoaDAO();
+			tipospessoas = tipopessoaDAO.listar();
+			pessoas = pessoaDAO.listar();
+			
+			Messages.addGlobalInfo("Pessoa salva com sucesso");
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar salvar a pessoa");
+			erro.printStackTrace();
+		}
+	}
+
+	public void excluir(ActionEvent evento) {
+		try {
+			pessoa = (Pessoa) evento.getComponent().getAttributes()
+					.get("pessoaSelecionada");
+
+			PessoaDAO pessoaDAO = new PessoaDAO();
+			pessoaDAO.excluir(pessoa);
+			pessoas = pessoaDAO.listar();
+
+			Messages.addGlobalInfo("Pessoa removida com sucesso");
+
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar remover a pessoa");
+			erro.printStackTrace();
+		}
+	}
+
+	public void editar(ActionEvent evento) {
+		try {
+			pessoa = (Pessoa) evento.getComponent().getAttributes().get("pessoaSelecionada");
+
+			PaisDAO paisDAO = new PaisDAO();
+			paises = paisDAO.listar();
+			CidadeDAO cidadeDAO = new CidadeDAO();
+			cidades = cidadeDAO.listar();
+			BairroDAO bairroDAO = new BairroDAO();
+			bairros = bairroDAO.listar();
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estados = estadoDAO.listar();
+			ClassificacaoDAO classificacaoDAO = new ClassificacaoDAO();
+			classificacoes = classificacaoDAO.listar();
+			EstadoCivilDAO estadocivilDAO = new EstadoCivilDAO();
+			estadoscivis = estadocivilDAO.listar();
+			GeneroDAO generoDAO = new GeneroDAO();
+			generos = generoDAO.listar();
+			TipoPessoaDAO tipopessoaDAO = new TipoPessoaDAO();
+			tipospessoas = tipopessoaDAO.listar();
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar selecionar uma pessoa");
+			erro.printStackTrace();
+		}
+
+	}
+}

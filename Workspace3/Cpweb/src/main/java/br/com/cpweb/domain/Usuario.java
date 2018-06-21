@@ -8,30 +8,49 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @SuppressWarnings("serial")
 @Entity
 public class Usuario extends GenericDomain {
+	
 	@Column(length = 6, nullable = false, unique = true)
 	private String cdusuario;
+	
 	@Column(length = 30, nullable = false, unique = true)
 	private String login;
+	
 	@Column(length = 50, nullable = false)
 	private String nome;
+	
 	@Column(length = 32, nullable = false)
 	private String senha;
+	
+	@Transient
+	private String senhaSemCriptografia;
+	
 	@Column(nullable = false)
 	@Temporal(TemporalType.DATE)
 	private Date dtcadastro;
+	
 	@Column
 	private Date dtultimoacesso;
+	
 	@Column(nullable = false)
 	private Boolean ativo;
-	
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private TipoUsuario tipousuario;
+
+	
+	public String getSenhaSemCriptografia() {
+		return senhaSemCriptografia;
+	}
+
+	public void setSenhaSemCriptografia(String senhaSemCriptografia) {
+		this.senhaSemCriptografia = senhaSemCriptografia;
+	}
 
 	public String getCdusuario() {
 		return cdusuario;
@@ -87,6 +106,18 @@ public class Usuario extends GenericDomain {
 
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
+	}
+	
+	@Transient
+	public String getAtivoFormatado(){
+		String ativoFormatado = null;
+		
+		if (ativo == true) {
+			ativoFormatado = "Usuário Ativo";
+		} else if (ativo == false ){
+			ativoFormatado = "Usuário Inativo";
+		} 
+			return ativoFormatado;
 	}
 
 	public TipoUsuario getTipousuario() {

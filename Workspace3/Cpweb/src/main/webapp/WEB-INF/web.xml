@@ -9,6 +9,23 @@
 		<param-value>Development</param-value>
 	</context-param>
 	
+	<!-- Página principal -->
+	<welcome-file-list>
+		<welcome-file>pages/autenticar.xhtml</welcome-file>
+	</welcome-file-list>
+
+	<!-- Tema PrimeFaces -->
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>redmond</param-value>
+	</context-param>
+
+	<!-- Definição de upload -->
+	<context-param>
+		<param-name>primefaces.UPLOADER</param-name>
+		<param-value>native</param-value>
+	</context-param>
+
 	<!-- Configuração do JSF -->
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
@@ -17,9 +34,9 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.xhtml</url-pattern>	
+		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- Carregamento do Hibernate -->
 	<listener>
 		<listener-class>br.com.cpweb.util.HibernateContexto</listener-class>

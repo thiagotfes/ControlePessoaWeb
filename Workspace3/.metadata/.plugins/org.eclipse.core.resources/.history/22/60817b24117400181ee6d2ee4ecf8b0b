@@ -1,0 +1,63 @@
+package br.com.cpweb.bean;
+
+import java.io.Serializable;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
+import org.omnifaces.util.Messages;
+
+import br.com.cpweb.DAO.ProdutoDAO;
+import br.com.cpweb.domain.Produto;
+
+@SuppressWarnings("serial")
+@ManagedBean
+@ViewScoped
+public class ProdutoBean2 implements Serializable {
+	private Produto produto;
+	private Boolean exibirPainelDeDados;
+
+	
+	public Boolean getExibirPainelDeDados() {
+		return exibirPainelDeDados;
+	}
+
+	public void setExibirPainelDeDados(Boolean exibirPainelDeDados) {
+		this.exibirPainelDeDados = exibirPainelDeDados;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+	
+	@PostConstruct
+	public void novo(){
+		produto = new Produto();
+		exibirPainelDeDados = false;
+	}
+	
+
+	
+	public void buscarCodigo(){
+		try {
+			
+			ProdutoDAO produtoDAO = new ProdutoDAO();
+			Produto resultado = produtoDAO.buscar(produto.getCodigo());
+			
+			if(resultado == null){
+				Messages.addFlashGlobalWarn("Não existe produto cadastrado para o código informado");
+			} else {
+				produto = resultado;
+			}
+			
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar localizar o produto");
+			erro.printStackTrace();
+		}
+	}
+}

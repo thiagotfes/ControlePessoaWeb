@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+
+	<h:outputStylesheet library="css" name="style.css" />
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>SoMo Web</title>
+</h:head>
+<h:body>
+	<p:growl id="mensagem" />
+
+
+	<div id="geral">
+		<div id="topo" class="divTopo">
+			<p:graphicImage library="images" name="logo.png" />
+		</div>
+
+		<div id="cabecalho" class="divCabecalho">
+			<h:form id="formMenu">
+				<p:menubar>
+					<p:submenu label="Arquivo">
+						<p:menuitem value="Sair" />
+					</p:submenu>
+
+					<p:submenu label="CRM">
+						<p:menuitem value="Cliente" url="/pages/clientes.xhtml" />
+						<p:menuitem value="Fabricante" url="/pages/fabricante.xhtml" />
+						<p:menuitem value="Fornecedor" url="/pages/fornecedor.xhtml" />
+						<p:menuitem value="Funcionário" url="/pages/funcionario.xhtml" />
+					</p:submenu>
+
+					<p:submenu label="Estoque">
+						<p:menuitem value="Produto" url="/pages/produtos.xhtml" />
+						<p:submenu label="Cadastros">
+							<p:menuitem value="Classificação Fiscal"
+								url="/pages/classificacaofiscal.xhtml" />
+							<p:menuitem value="Grupo de Produto"
+								url="/pages/grupoproduto.xhtml" />
+							<p:menuitem value="ICMS" url="/pages/icms.xhtml" />
+							<p:menuitem value="Tipo de Produto"
+								url="/pages/tipoproduto.xhtml" />
+							<p:menuitem value="Unidade" url="/pages/unidade.xhtml" />
+						</p:submenu>
+					</p:submenu>
+
+					<p:submenu label="Configurador Geral">
+						<p:submenu label="Endereço">
+							<p:menuitem value="Bairro" url="/pages/bairro.xhtml" />
+							<p:menuitem value="Cidade" url="/pages/cidade.xhtml" />
+							<p:menuitem value="Estado" url="/pages/estados.xhtml" />
+							<p:menuitem value="País" url="/pages/paises.xhtml" />
+						</p:submenu>
+						<p:submenu label="Utilidades">
+							<p:menuitem value="Cadastro de Pessoa" url="/pages/pessoas.xhtml" />
+							<p:menuitem value="Cadastro de Usuário"
+								url="/pages/usuarios.xhtml" />
+						</p:submenu>
+						<p:submenu label="Cadastros">
+							<p:menuitem value="Classificação de Pessoa"
+								url="/pages/classificacao.xhtml" />
+							<p:menuitem value="Estado Civil" url="/pages/estadocivil.xhtml" />
+							<p:menuitem value="Genero" url="/pages/genero.xhtml" />
+							<p:menuitem value="Tipo de Pessoa" url="/pages/tipopessoa.xhtml" />
+							<p:menuitem value="Tipo de Usuário"
+								url="/pages/tipousuario.xhtml" />
+						</p:submenu>
+						<p:submenu label="Empresa">
+							<p:menuitem value="Nova Empresa" url="/pages/empresas.xhtml" />
+							<p:menuitem value="Regime Tributário" url="/pages/regime.xhtml" />
+						</p:submenu>
+					</p:submenu>
+
+					<p:submenu label="Faturamento">
+						<p:menuitem value="Venda" url="/pages/vendas.xhtml" />
+					</p:submenu>
+
+					<p:submenu label="Ajuda">
+						<p:menuitem value="Sobre" />
+					</p:submenu>
+					<p:menubar>
+						<p:menuButton value="Logoff"
+							actionListener="#{autenticacaoBean.deslogar}" update=":mensagem " />
+					</p:menubar>
+				</p:menubar>
+			</h:form>
+		</div>
+		<div id="conteudo">
+			<ui:insert name="conteudo" />
+		</div>
+	</div>
+
+</h:body>
+</html>

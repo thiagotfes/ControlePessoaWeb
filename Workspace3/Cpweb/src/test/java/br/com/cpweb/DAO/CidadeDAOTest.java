@@ -23,7 +23,7 @@ public class CidadeDAOTest {
 		Cidade cidade = new Cidade();
 		cidade.setCdcidade("000001");
 		cidade.setNome("Teresopolis");
-		cidade.setUf(estado);
+		cidade.setEstado(estado);
 		cidade.setPais(pais);
 		
 		CidadeDAO cidadeDAO = new CidadeDAO();
@@ -39,8 +39,8 @@ public class CidadeDAOTest {
 		for (Cidade cidade : resultado){
 			System.out.println("Código da cidade: " + cidade.getCodigo());
 			System.out.println("Nome da cidade: " + cidade.getNome());
-			System.out.println("Código do estado: " + cidade.getUf().getCduf());
-			System.out.println("Nome do estado: " + cidade.getUf().getNome());
+			System.out.println("Código do estado: " + cidade.getEstado().getCduf());
+			System.out.println("Nome do estado: " + cidade.getEstado().getNome());
 			System.out.println("Código do país: " + cidade.getPais().getCdpais());
 			System.out.println("Nome do país: " + cidade.getPais().getNome());
 			System.out.println();
@@ -56,8 +56,8 @@ public class CidadeDAOTest {
 	
 			System.out.println("Código da cidade: " + cidade.getCodigo());
 			System.out.println("Nome da cidade: " + cidade.getNome());
-			System.out.println("Código do estado: " + cidade.getUf().getCduf());
-			System.out.println("Nome do estado: " + cidade.getUf().getNome());
+			System.out.println("Código do estado: " + cidade.getEstado().getCduf());
+			System.out.println("Nome do estado: " + cidade.getEstado().getNome());
 			System.out.println("Código do país: " + cidade.getPais().getCdpais());
 			System.out.println("Nome do país: " + cidade.getPais().getNome());
 		}
@@ -74,8 +74,8 @@ public class CidadeDAOTest {
 		System.out.println("Cidade removida:");
 		System.out.println("Código da cidade: " + cidade.getCodigo());
 		System.out.println("Nome da cidade: " + cidade.getNome());
-		System.out.println("Código do estado: " + cidade.getUf().getCduf());
-		System.out.println("Nome do estado: " + cidade.getUf().getNome());
+		System.out.println("Código do estado: " + cidade.getEstado().getCduf());
+		System.out.println("Nome do estado: " + cidade.getEstado().getNome());
 		System.out.println("Código do país: " + cidade.getPais().getCdpais());
 		System.out.println("Nome do país: " + cidade.getPais().getNome());
 		
@@ -100,22 +100,42 @@ public class CidadeDAOTest {
 		System.out.println("Cidade a ser editada:");
 		System.out.println("Código da cidade: " + cidade.getCodigo());
 		System.out.println("Nome da cidade: " + cidade.getNome());
-		System.out.println("Código do estado: " + cidade.getUf().getCduf());
-		System.out.println("Nome do estado: " + cidade.getUf().getNome());
+		System.out.println("Código do estado: " + cidade.getEstado().getCduf());
+		System.out.println("Nome do estado: " + cidade.getEstado().getNome());
 		System.out.println("Código do país: " + cidade.getPais().getCdpais());
 		System.out.println("Nome do país: " + cidade.getPais().getNome());
 		
 		cidade.setNome("Lambari");
-		cidade.setUf(estado);
+		cidade.setEstado(estado);
 		cidadeDAO.editar(cidade);
 		
 		System.out.println("Cidade editada:");
 		System.out.println("Código da cidade: " + cidade.getCodigo());
 		System.out.println("Nome da cidade: " + cidade.getNome());
-		System.out.println("Código do estado: " + cidade.getUf().getCduf());
-		System.out.println("Nome do estado: " + cidade.getUf().getNome());
+		System.out.println("Código do estado: " + cidade.getEstado().getCduf());
+		System.out.println("Nome do estado: " + cidade.getEstado().getNome());
 		System.out.println("Código do país: " + cidade.getPais().getCdpais());
 		System.out.println("Nome do país: " + cidade.getPais().getNome());
 	}
+	
+	@Test
+	@Ignore
+	public void buscarPorEstado(){
+		Long estadoCodigo = 3L;
+		
+		CidadeDAO cidadeDAO = new CidadeDAO();
+		List<Cidade> resultado = cidadeDAO.buscarPorEstado(estadoCodigo);
+		
+		for (Cidade cidade : resultado){
+			System.out.println("Código da cidade: " + cidade.getCodigo());
+			System.out.println("Nome da cidade: " + cidade.getNome());
+			System.out.println("Código do estado: " + cidade.getEstado().getCduf());
+			System.out.println("Nome do estado: " + cidade.getEstado().getNome());
+			System.out.println("Código do país: " + cidade.getPais().getCdpais());
+			System.out.println("Nome do país: " + cidade.getPais().getNome());
+			System.out.println();
+		}
+	}
+	
 	}
 

@@ -1,0 +1,49 @@
+package br.com.cpweb.domain;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import br.com.cpweb.domain.GenericDomain;
+
+@SuppressWarnings("serial")
+@Entity
+public class Produto extends GenericDomain {	
+	@Column(length = 6, nullable = false, unique = true)
+	private String cdproduto;
+
+	@Column(length = 250, nullable = false)
+	private String descricao;
+	
+	@Column(nullable = false)
+	private Short quantidade;
+	
+	@Column(nullable = false, precision = 15, scale = 2)
+	private BigDecimal preco;
+	
+	@Column(nullable = false, precision = 6, scale = 2)
+	private BigDecimal pesobruto;
+	
+	@Column(nullable = false, precision = 6, scale = 2)
+	private BigDecimal pesoliquido;
+	
+	@Column(nullable = false)
+	private Character origem;
+	
+	@Column(length = 300)
+	private String observacao;
+	
+	@Column(nullable = false)
+	@Temporal(TemporalType.DATE)
+	private Date dtcadastro;
+	
+	@Column(nullable = false)
+	private Boolean ativo;
+	
+}

@@ -1,0 +1,8 @@
+package br.com.cpweb.DAO;
+
+import br.com.cpweb.domain.Cliente;
+import br.com.cpweb.domain.GenericDomain;
+
+public class ClienteDAO extends GenericDomain<Cliente> {
+
+}

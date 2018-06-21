@@ -13,7 +13,7 @@
 		<property name="connection.url">jdbc:mysql://127.0.0.1:3306/controlepessoaweb</property>
 		<property name="connection.username">root</property>
 		<property name="connection.password">123456</property>
-		
+
 		<!-- Pool de conexões -->
 		<property name="connection.pool_size">1</property>
 
@@ -35,17 +35,34 @@
 		<!-- Mapeamento das Entidades -->
 		<mapping class="br.com.cpweb.domain.Estado" />
 		<mapping class="br.com.cpweb.domain.Pais" />
-		<mapping class="br.com.cpweb.domain.Cidade" />		
+		<mapping class="br.com.cpweb.domain.Cidade" />
 		<mapping class="br.com.cpweb.domain.Bairro" />
 		<mapping class="br.com.cpweb.domain.Classificacao" />
 		<mapping class="br.com.cpweb.domain.EstadoCivil" />
-		<mapping class="br.com.cpweb.domain.Genero" />		
+		<mapping class="br.com.cpweb.domain.Genero" />
 		<mapping class="br.com.cpweb.domain.Pessoa" />
 		<mapping class="br.com.cpweb.domain.TipoPessoa" />
 		<mapping class="br.com.cpweb.domain.TipoUsuario" />
-		<mapping class="br.com.cpweb.domain.Usuario" />									
+		<mapping class="br.com.cpweb.domain.Usuario" />
+		<mapping class="br.com.cpweb.domain.ClassificacaoFiscal" />
+		<mapping class="br.com.cpweb.domain.Empresa" />
+		<mapping class="br.com.cpweb.domain.Fabricante" />
+		<mapping class="br.com.cpweb.domain.GrupoProduto" />
+		<mapping class="br.com.cpweb.domain.Icms" />
+		<mapping class="br.com.cpweb.domain.Produto" />
+		<mapping class="br.com.cpweb.domain.TipoProduto" />
+		<mapping class="br.com.cpweb.domain.Unidade" />
+		<mapping class="br.com.cpweb.domain.Regime" />
+		<mapping class="br.com.cpweb.domain.Venda" />
+		<mapping class="br.com.cpweb.domain.itemVenda" />
+		<mapping class="br.com.cpweb.domain.Cliente" />
+		<mapping class="br.com.cpweb.domain.Funcionario" />
+		<mapping class="br.com.cpweb.domain.Fornecedor" />
+		<mapping class="br.com.cpweb.domain.Historico" />
+		<mapping class="br.com.cpweb.domain.Caixa" />
+		<mapping class="br.com.cpweb.domain.Movimentacao" />
 
-		
+
 	</session-factory>
 
 </hibernate-configuration>

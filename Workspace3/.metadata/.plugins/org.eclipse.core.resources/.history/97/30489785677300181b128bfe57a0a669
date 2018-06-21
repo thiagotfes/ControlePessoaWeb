@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="produtos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7e885ec3-b8b0-4426-b4e8-268a7623bdcb">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[Y29udHJvbGVwZXNzb2F3ZWIuY2xhc3NpZmljYWNhb2Zpc2NhbCBBUyAsMjY3LDQyNSw2YzI3ZDQy
+Yy1mZWExLTQ3YTEtYjAxMi1hZjAwZDYyNTM2ZTM7Y29udHJvbGVwZXNzb2F3ZWIuZW1wcmVzYSBB
+UyAsNTk0LDExMCw4OTlhOTBhMS04NWJkLTQwNTktYjg3MS1lMzg4MmQ1ZWMzZmE7Y29udHJvbGVw
+ZXNzb2F3ZWIucHJvZHV0byBBUyAsNjUsMTUsMDVmZTRjMjItOGY1Yy00YzcxLThlOTQtZjFkZDcx
+NWZlNjAwO2NvbnRyb2xlcGVzc29hd2ViLnVuaWRhZGUgQVMgLDQzMiwyNDUsZjQ0YjQ2MGMtMmYx
+Yi00YzFmLWI3ZDgtYjRmMjI5NjIwYzM1O2NvbnRyb2xlcGVzc29hd2ViLmljbXMgQVMgLDM5Niwx
+NCw2ZGY0Yjc3Yy03NzcwLTRhNzctOTc3NS1kZjBlMDc3Y2QwM2M7Y29udHJvbGVwZXNzb2F3ZWIu
+dGlwb3Byb2R1dG8gQVMgLDI2OSwyNzAsZDdlYTRhNTUtZGMyYS00ODI3LTgxOTgtZDZhNDU2M2Rl
+YzljO2NvbnRyb2xlcGVzc29hd2ViLmdydXBvcHJvZHV0byBBUyAsMjYzLDEzNSw5ZTA0MmM4YS1j
+ZmJkLTRmYjgtOWU3OC04ODhmM2Q4Y2FmYTE7Y29udHJvbGVwZXNzb2F3ZWIuZmFicmljYW50ZSBB
+UyAsMjYyLDE5LDg1MGQ5MDIyLWIwZGQtNDM2Yy1iMjk4LTI2NDI2YzU5YTI5NTs=
+]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="349"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="644"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SoMo Data Adapter "/>
+	<queryString language="SQL">
+		<![CDATA[SELECT controlepessoaweb.produto.descricao,
+	controlepessoaweb.produto.preco,
+	controlepessoaweb.produto.quantidade,
+	controlepessoaweb.fabricante.nome,
+	controlepessoaweb.grupoproduto.descricao,
+	controlepessoaweb.icms.descricao,
+	controlepessoaweb.tipoproduto.descricaotipoproduto,
+	controlepessoaweb.unidade.descricaounidade,
+	controlepessoaweb.empresa.nomeempresa,
+	controlepessoaweb.classificacaofiscal.classificacao,
+	controlepessoaweb.icms.alicms,
+	controlepessoaweb.classificacaofiscal.alipi,
+	controlepessoaweb.grupoproduto.cdgrupoproduto
+FROM controlepessoaweb.produto
+	INNER JOIN controlepessoaweb.fabricante ON 
+	 controlepessoaweb.produto.fabricante_codigo = controlepessoaweb.fabricante.codigo 
+	INNER JOIN controlepessoaweb.icms ON 
+	 controlepessoaweb.produto.icms_codigo = controlepessoaweb.icms.codigo 
+	INNER JOIN controlepessoaweb.classificacaofiscal ON 
+	 controlepessoaweb.produto.classificacaofiscal_codigo = controlepessoaweb.classificacaofiscal.codigo 
+	INNER JOIN controlepessoaweb.grupoproduto ON 
+	 controlepessoaweb.produto.grupoproduto_codigo = controlepessoaweb.grupoproduto.codigo 
+	INNER JOIN controlepessoaweb.tipoproduto ON 
+	 controlepessoaweb.produto.tipoproduto_codigo = controlepessoaweb.tipoproduto.codigo 
+	INNER JOIN controlepessoaweb.unidade ON 
+	 controlepessoaweb.produto.unidade_codigo = controlepessoaweb.unidade.codigo 
+	INNER JOIN controlepessoaweb.empresa ON 
+	 controlepessoaweb.produto.empresa_codigo = controlepessoaweb.empresa.codigo 
+ORDER BY controlepessoaweb.produto.cdproduto ASC,
+	controlepessoaweb.produto.descricao ASC,
+	controlepessoaweb.fabricante.nome ASC]]>
+	</queryString>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<field name="preco" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="preco"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<field name="quantidade" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="quantidade"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="fabricante"/>
+	</field>
+	<field name="COLUMN_5" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="grupoproduto"/>
+	</field>
+	<field name="COLUMN_6" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="icms"/>
+	</field>
+	<field name="descricaotipoproduto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricaotipoproduto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tipoproduto"/>
+	</field>
+	<field name="descricaounidade" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricaounidade"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="unidade"/>
+	</field>
+	<field name="nomeempresa" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nomeempresa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empresa"/>
+	</field>
+	<field name="classificacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="classificacao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="classificacaofiscal"/>
+	</field>
+	<field name="alicms" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="alicms"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="icms"/>
+	</field>
+	<field name="alipi" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="alipi"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="classificacaofiscal"/>
+	</field>
+	<field name="cdgrupoproduto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cdgrupoproduto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="grupoproduto"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Grupo de produto</title>
+</h:head>
+<h:body>
+
+	<p:growl id="mensagem" />
+
+	<!-- FORM DA LISTAGEM -->
+	<h:form id="formListagem">
+
+		<!-- PAINEL DA LISTAGEM -->
+		<p:panel header="Grupo de produto - Listagem">
+
+			<!-- TABELA -->
+			<p:dataTable emptyMessage="Nenhum registro encontrado."
+				paginator="true" value="#{grupoProdutoBean.gruposprodutos}" var="grupoproduto"
+				rows="10" id="tabela">
+
+				<!-- BOTÃO NOVO DA LISTAGEM -->
+				<f:facet name="header">
+					<p:commandButton value="Novo" actionListener="#{grupoProdutoBean.novo}"
+						oncomplete="PF('dialogo').show();"
+						update=":mensagem :formCadastro:painel">
+						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</f:facet>
+
+				<!-- CABEÇALHOS DA LISTAGEM -->
+				<p:column headerText="Código" sortBy="#{grupoproduto.cdgrupoproduto}"
+					filterBy="#{grupoproduto.cdgrupoproduto}">
+					<h:outputText value="#{grupoproduto.cdgrupoproduto}" />
+				</p:column>
+
+				<p:column headerText="Descrição" sortBy="#{grupoproduto.descricao}"
+					filterBy="#{grupoproduto.descricao}">
+					<h:outputText value="#{grupoproduto.descricao}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{grupoProdutoBean.excluir}"
+						update=":mensagem :formListagem:tabela">
+						<p:confirm header="Confirmação" message="Deseja excluir o grupo de produto?"
+							icon="ui-icon-alert" />
+						<f:attribute name="grupoprodutoSelecionado" value="#{grupoproduto}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{grupoProdutoBean.editar}"
+						update=":mensagem :formCadastro:painel"
+						oncomplete="PF('dialogo').show();">
+						<f:attribute name="grupoprodutoSelecionado" value="#{grupoproduto}" />
+						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+		</p:panel>
+	</h:form>
+
+	<!-- TELA DE CADASTRO -->
+	<p:dialog header="Grupo de produto - Cadastro" widgetVar="dialogo"
+		closable="false" draggable="false" resizable="false" modal="true">
+
+		<!-- FORM DA TELA DE CADASTRO -->
+		<h:form id="formCadastro">
+
+			<!-- PAINEL DA TELA DE CADASTRO -->
+			<p:panelGrid id="painel" columns="2">
+				<p:outputLabel for="codigo" value="Código: " />
+				<p:inputText id="codigo" size="5" maxlength="6"
+					value="#{grupoProdutoBean.grupoproduto.cdgrupoproduto}" 
+					required="true" 
+					requiredMessage="O campo 'Código:' é obrigatório."/>
+
+				<p:outputLabel for="descricao" value="Descrição: " />
+				<p:inputText id="nome" size="60" maxlength="50"
+					value="#{grupoProdutoBean.grupoproduto.descricao}" 
+					required="true" 
+					requiredMessage="O campo 'Descrição:' é obrigatório."/>
+
+			</p:panelGrid>
+
+			<p:panelGrid columns="2">
+				<p:commandButton value="Salvar"
+					actionListener="#{grupoProdutoBean.salvar}"
+					update=":mensagem :formCadastro:painel :formListagem:tabela"/>
+				<p:commandButton value="Cancelar" oncomplete="PF('dialogo').hide();" />
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+
+</h:body>
+</html>

@@ -15,7 +15,7 @@ public class Cidade extends GenericDomain {
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Estado uf;
+	private Estado estado;
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
@@ -37,12 +37,12 @@ public class Cidade extends GenericDomain {
 		this.nome = nome;
 	}
 
-	public Estado getUf() {
-		return uf;
+	public Estado getEstado() {
+		return estado;
 	}
 
-	public void setUf(Estado uf) {
-		this.uf = uf;
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 
 	public Pais getPais() {
@@ -52,5 +52,8 @@ public class Cidade extends GenericDomain {
 	public void setPais(Pais pais) {
 		this.pais = pais;
 	}
+
+
+	
 
 }

@@ -53,7 +53,7 @@ public class EstadoBean implements Serializable {
 			EstadoDAO estadoDAO = new EstadoDAO();
 			estados = estadoDAO.listar();
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao tentar listar os países");
+			Messages.addGlobalError("Ocorreu um erro ao tentar listar os estados");
 			erro.printStackTrace();
 		}
 	}
@@ -62,10 +62,12 @@ public class EstadoBean implements Serializable {
 		try {
 			estado = new Estado();
 
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estados = estadoDAO.listar();
 			PaisDAO paisDAO = new PaisDAO();
-			paises = paisDAO.listar();
+			paises = paisDAO.listar("nome");
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao tentar gerar um novo país");
+			Messages.addGlobalError("Ocorreu um erro ao tentar gerar um novo estado");
 			erro.printStackTrace();
 		}
 	}
@@ -74,9 +76,10 @@ public class EstadoBean implements Serializable {
 		try {
 			EstadoDAO estadoDAO = new EstadoDAO();
 			estadoDAO.merge(estado);
-			novo();
+			estado = new Estado();
+			
 			PaisDAO paisDAO = new PaisDAO();
-			paises = paisDAO.listar();
+			paises = paisDAO.listar("nome");
 			estados = estadoDAO.listar();
 			
 			Messages.addGlobalInfo("Estado cadastrado com sucesso");
@@ -107,7 +110,7 @@ public class EstadoBean implements Serializable {
 			estado = (Estado) evento.getComponent().getAttributes().get("estadoSelecionado");
 
 			PaisDAO paisDAO = new PaisDAO();
-			paises = paisDAO.listar();
+			paises = paisDAO.listar("nome");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar selecionar um Estado");
 			erro.printStackTrace();

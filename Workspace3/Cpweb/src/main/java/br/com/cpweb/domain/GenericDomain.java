@@ -53,4 +53,5 @@ public class GenericDomain implements Serializable {
 	}
 
 	
+	
 }
